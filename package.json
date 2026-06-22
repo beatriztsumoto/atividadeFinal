@@ -1,0 +1,29 @@
+{
+  "name": "atividadeFinal",
+  "version": "1.0.0",
+  "description": "Atividade de recuperação",
+  "main": "server.js",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [
+    "recuperação",
+    "atividade"
+  ],
+  "author": "Beatriz Tsumoto",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.3.0",
+    "@prisma/client": "^7.3.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.22.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "prisma": "^7.8.0"
+  }
+}

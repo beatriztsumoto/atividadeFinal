@@ -11,17 +11,15 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
     console.log('🌱 Resetando tabela alunos...');
 
-    // Remove todos os registros (descomente se quiser limpar a tabela antes de popular)
-    // await prisma.aluno.deleteMany();
+    // Remove todos os registros
+    // await prisma.alunos.deleteMany();
 
     console.log('📦 Inserindo novos registros...');
 
-    await prisma.aluno.createMany({
+    await prisma.alunos.createMany({
         data: [
-            { nome: 'Manuela Santana', turma: '3A', materia: 'Geografia' },
-            { nome: 'Vinicius Azevedo', turma: '1B', materia: 'Filosofia' },
-            { nome: 'João Carlos', turma: '2D', materia: 'Português' },
-            { nome: 'Lorenzo Silva', turma: '3C', materia: 'Algebra' },
+            { nome: 'alunos Alphas', turma: '2tds1', materia: 'Back-end' },
+            { nome: 'alunos Betas', turma: '2tds2', materia: 'Front-end' },
         ],
     });
 
@@ -30,7 +28,7 @@ async function main() {
 
 main()
     .catch((e) => {
-        console.error(e);
+        console.error('❌ Erro no seed:', e);
         process.exit(1);
     })
     .finally(async () => {

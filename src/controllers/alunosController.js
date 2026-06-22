@@ -6,19 +6,19 @@ export const criar = async (req, res) => {
             return res.status(400).json({ error: 'Corpo da requisição vazio. Envie os dados!' });
         }
 
-        const { nome, turma, materia } = req.body;
+        const { nome, turma, materia, foto } = req.body;
 
         if (!nome) {
             return res.status(400).json({ error: 'O campo "nome" é obrigatório!' });
         }
-        if (!turma) {
+        if (turma === undefined || turma === null) {
             return res.status(400).json({ error: 'O campo "turma" é obrigatório!' });
         }
-        if (!materia) {
+        if (materia === undefined || materia === null) {
             return res.status(400).json({ error: 'O campo "materia" é obrigatório!' });
         }
 
-        const alunos = new AlunosModel({ nome, turma, materia });
+        const alunos = new AlunosModel({ nome, materia, turma, foto });
         const data = await alunos.criar();
 
         return res.status(201).json({ message: 'Registro criado com sucesso!', data });
@@ -60,7 +60,7 @@ export const buscarPorId = async (req, res) => {
         return res.status(200).json({ data: alunos });
     } catch (error) {
         console.error('Erro ao buscar:', error);
-        return res.status(500).json({ error: 'Erro ao buscar registro.' });
+        return res.status(500).json({ error: 'Erro ao buscar registro.', error });
     }
 };
 
@@ -85,11 +85,11 @@ export const atualizar = async (req, res) => {
         if (req.body.nome !== undefined) {
             alunos.nome = req.body.nome;
         }
-        if (req.body.turma !== undefined) {
-            alunos.turma = req.body.turma;
-        }
         if (req.body.materia !== undefined) {
             alunos.materia = req.body.materia;
+        }
+        if (req.body.turma !== undefined) {
+            alunos.turma = req.body.turma;
         }
 
         const data = await alunos.atualizar();
@@ -99,7 +99,7 @@ export const atualizar = async (req, res) => {
             .json({ message: `O registro "${data.nome}" foi atualizado com sucesso!`, data });
     } catch (error) {
         console.error('Erro ao atualizar:', error);
-        return res.status(500).json({ error: 'Erro ao atualizar registro.' });
+        return res.status(500).json({ error: 'Erro ao atualizar registro.', error });
     }
 };
 

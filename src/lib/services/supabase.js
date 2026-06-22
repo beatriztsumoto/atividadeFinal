@@ -1,4 +1,4 @@
-import prisma from '../services/prismaClient';
+import prisma from '../services/prismaClient.js';
 
 export default class AlunosModel {
     constructor({ id = null, nome, turma, materia, foto = null } = {}) {

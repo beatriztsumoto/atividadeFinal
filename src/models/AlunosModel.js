@@ -1,6 +1,6 @@
 import prisma from '../lib/services/prismaClient.js';
 
-export default class ExemploModel {
+export default class AlunosModel {
     constructor({ id = null, nome, turma, materia, foto = null } = {}) {
         this.id = id;
         this.nome = nome;
@@ -37,11 +37,11 @@ export default class ExemploModel {
         if (filtros.nome) {
             where.nome = { contains: filtros.nome, mode: 'insensitive' };
         }
-        if (filtros.turma) {
-            where.turma = { contains: filtros.turma, mode: 'insensitive' };
+        if (filtros.turma !== undefined) {
+            where.turma = filtros.turma === 'true';
         }
-        if (filtros.materia) {
-            where.materia = { contains: filtros.materia, mode: 'insensitive' };
+        if (filtros.materia !== undefined) {
+            where.materia = filtros.materia === 'true';
         }
 
         return prisma.alunos.findMany({ where });
@@ -52,6 +52,6 @@ export default class ExemploModel {
         if (!data) {
             return null;
         }
-        return new ExemploModel(data);
+        return new AlunosModel(data);
     }
 }

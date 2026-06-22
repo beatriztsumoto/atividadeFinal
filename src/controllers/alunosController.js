@@ -28,21 +28,23 @@ export const criar = async (req, res) => {
     }
 };
 
-export const buscarTodos = async (req, res) => {
-    try {
-        const registros = await AlunosModel.buscarTodos(req.query);
+export const buscarTodos = async (filtros = {}) => {
+    const where = {};
 
-        if (!registros || registros.length === 0) {
-            return res.status(400).json({ message: 'Nenhum registro encontrado.' });
-        }
-
-        return res.status(200).json(registros);
-    } catch (error) {
-        console.error('Erro ao buscar:', error);
-        return res.status(500).json({ error: 'Erro ao buscar registros.' });
+    if (filtros.nome) {
+        where.nome = { contains: filtros.nome, mode: 'insensitive' };
     }
-};
 
+    if (filtros.turma) {
+        where.turma = { contains: filtros.turma, mode: 'insensitive' };
+    }
+
+    if (filtros.materia) {
+        where.materia = { contains: filtros.materia, mode: 'insensitive' };
+    }
+
+    return prisma.alunos.findMany({ where });
+};
 export const buscarPorId = async (req, res) => {
     try {
         const { id } = req.params;

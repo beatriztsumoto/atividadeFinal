@@ -6,19 +6,19 @@ export const criar = async (req, res) => {
             return res.status(400).json({ error: 'Corpo da requisição vazio. Envie os dados!' });
         }
 
-        const { nome, turma, materia, foto } = req.body;
+        const { nome, turma, materia } = req.body;
 
         if (!nome) {
             return res.status(400).json({ error: 'O campo "nome" é obrigatório!' });
         }
-        if (turma === undefined || turma === null) {
+        if (!turma) {
             return res.status(400).json({ error: 'O campo "turma" é obrigatório!' });
         }
-        if (materia === undefined || materia === null) {
+        if (!materia) {
             return res.status(400).json({ error: 'O campo "materia" é obrigatório!' });
         }
 
-        const alunos = new AlunosModel({ nome, materia, turma, foto });
+        const alunos = new AlunosModel({ nome, turma, materia });
         const data = await alunos.criar();
 
         return res.status(201).json({ message: 'Registro criado com sucesso!', data });
@@ -85,11 +85,11 @@ export const atualizar = async (req, res) => {
         if (req.body.nome !== undefined) {
             alunos.nome = req.body.nome;
         }
+        if (req.body.turma !== undefined) {
+            alunos.turma = req.body.turma;
+        }
         if (req.body.materia !== undefined) {
             alunos.materia = req.body.materia;
-        }
-        if (req.body.turma !== undefined) {
-            alunos.turma = parseFloat(req.body.turma);
         }
 
         const data = await alunos.atualizar();
